@@ -33,20 +33,34 @@ public class Ticket {
         this.passenger = passenger;
 
         passenger.boughtOne(this);
-        trip.reservedOne(this);
+        trip.preservedOne(this);
         this.seatNumber = trip.getTickets().size();
 
     }
 
+    public void setTrip(Trip trip) {
+        trip.preservedOne(this);
+        this.trip = trip;
+        this.seatNumber = trip.getTickets().size();
+    }
+
+    public void setPassenger(Passenger passenger) {
+        passenger.boughtOne(this);
+        this.passenger = passenger;
+    }
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "trip_id", nullable = false,insertable = false,updatable = false)
+
     private Trip trip;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "passenger_id", nullable = false,insertable = false,updatable = false)
+
     private Passenger passenger;
 
     @EmbeddedId
+    @GeneratedValue
     private TicketId ticketId;
 
     @Column(name = "seat_number", nullable = false)
@@ -61,10 +75,7 @@ public class Ticket {
     }
 
     @Embeddable
-    @Getter
-    @Setter
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class TicketId implements Serializable {
         @Column(name = "passenger_id", nullable = false, unique = true)
         private Long passengerId;
@@ -72,6 +83,10 @@ public class Ticket {
         @Column(name = "trip_id", nullable = false, unique = true)
         private Long tripId;
 
+        public TicketId(Long passengerId, Long tripId) {
+            this.passengerId = passengerId;
+            this.tripId = tripId;
+        }
 
         @Override
         public boolean equals(Object o) {

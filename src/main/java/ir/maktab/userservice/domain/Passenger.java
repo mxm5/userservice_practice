@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Passenger {
 
 //    id
@@ -24,6 +25,7 @@ public class Passenger {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -40,7 +42,13 @@ public class Passenger {
     @OneToMany(mappedBy = "passenger", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
 
-    enum Gender {
+    public Passenger(String firstName, String lastName, Gender gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+    }
+
+    public enum Gender {
         MALE, FEMALE
     }
 

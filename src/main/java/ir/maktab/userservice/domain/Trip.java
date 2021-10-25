@@ -29,7 +29,7 @@ public class Trip {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -51,7 +51,7 @@ public class Trip {
     @OneToMany(mappedBy = "trip", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
 
-    public void reservedOne(Ticket ticket) {
+    public void preservedOne(Ticket ticket) {
         if (totalSeats > tickets.size()) {
             this.tickets.add(ticket);
         }else
