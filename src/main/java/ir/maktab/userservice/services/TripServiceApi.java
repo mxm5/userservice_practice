@@ -11,4 +11,6 @@ public interface TripServiceApi <Trip,Long>{
             String destination,
             String date
             ) throws ParseException;
+
+    Trip getById(String tripId);
 }

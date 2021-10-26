@@ -48,6 +48,8 @@ public class Trip {
     @Column(name = "moving_time", nullable = false)
     private Time movingTime;
 
+
+
     @OneToMany(mappedBy = "trip", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
 
@@ -55,7 +57,7 @@ public class Trip {
         if (totalSeats > tickets.size()) {
             this.tickets.add(ticket);
         }else
-            throw new TicketsSoldOut("\n\n all tickets sold out \n\n");
+            throw new TicketsSoldOut(" all tickets sold out ");
     }
 
     @Override

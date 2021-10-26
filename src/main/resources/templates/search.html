@@ -49,16 +49,22 @@
         <thead class="thead-dark">
         <tr>
             <th  class="text-center" >moving date :
-                <span th:if="${listTrip.size()!=0}" >[[${listTrip.get(0).movingDate}]]</span>
+                <span th:if="${listTrip}" >
+                    [[${listTrip.get(0).movingDate}]]
+                </span>
 
             </th>
 <!--            origin-->
 <!--            destination-->
 <!--            movingDate-->
             <th colspan="2" class="text-center">route :
-                <span th:if="${listTrip.size()!=0}" >[[${listTrip.get(0).origin}]]</span>
+                <span th:if="${listTrip}" >
+                    [[${listTrip.get(0).origin}]]
+                </span>
                 -
-                <span th:if="${listTrip.size()!=0}" >[[${listTrip.get(0).destination}]]</span>
+                <span th:if="${listTrip}" >
+                    [[${listTrip.get(0).destination}]]
+                </span>
             </th>
 
         </tr>
@@ -69,13 +75,18 @@
             <th></th>
         </tr>
         <tbody>
+    <tr th:if="${error}">
+        <td colspan="3">
+            <div class="alert alert-danger"> [[${error}]]</div>
+        </td>
+    </tr>
         <th:block th:each="trip : ${listTrip}">
             <tr>
                 <td>[[${trip.id}]]</td>
                 <td>[[${trip.movingTime}]]</td>
 
                 <td>
-                    <a class="h4 mr-3" th:href="@{'/users/edit/' +${trip.id}}">buy</a>
+                    <a class="h4 mr-3" th:href="@{'/ticket/buy/' +${trip.id}}">buy</a>
 <!--                    <a class="h4" th:href="@{'/users/delete/' + ${trip.id}}">Delete</a>-->
                 </td>
             </tr>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+</head>
+<body class="">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="/users">login <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashbord">dashboard</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link " href="/ticket">search</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+<div class="row d-flex justify-content-center">
+    <div class="m-5 col-4 " >
+        <form th:action="@{/ticket/buying}" method="post">
+            <div class="form-group">
+                <label for="first-name">first name</label>
+                <input type="text" name="first-name" class="form-control" id="first-name" aria-describedby="user-name" placeholder="enter first name">
+            </div>
+            <div class="form-group">
+                <label for="last-name">last name</label>
+                <input type="text" name="last-name" class="form-control" id="last-name" aria-describedby="user-name" placeholder="enter last name">
+            </div>
+            <p>gender</p>
+             <input type="radio" id="male" name="gender" value="male">
+             <label for="male">male</label><br>
+             <input type="radio" id="female" name="gender" value="female">
+             <label for="female">female</label><br>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<div class="row d-flex justify-content-center">
+    <div class=" col-4 " >
+        <div class=" alert-danger alert" th:if="${error}">[[${error}]]</div>
+    </div>
+</div>
+</body>
+</html>

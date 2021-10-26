@@ -18,10 +18,16 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
     UserService userService;
-    @Autowired
+    final
     SessionData sessionData;
+
+
+    @Autowired
+    public UserController(SessionData sessionData) {
+        this.sessionData = sessionData;
+    }
+
 
     @GetMapping({"","/"})
     public String getLoginPage() {
