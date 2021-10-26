@@ -61,4 +61,14 @@ public class Ticket {
         passenger.getTickets().remove(this);
     }
 
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "trip=" + trip +
+                ", passenger=" + passenger +
+                ", seatNumber=" + seatNumber +
+                ", buyingTime=" + buyingTime +
+                ", id=" + id +
+                '}';
+    }
 }

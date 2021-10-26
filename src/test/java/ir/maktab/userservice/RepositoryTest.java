@@ -132,10 +132,39 @@ public class RepositoryTest {
     }
 
     @Test
+    public void orderTicketUser() throws Exception {
+        Optional<Trip> tripById = tripRepository.findById(1L);
+        Trip trip = tripById.get();
+        Optional<User> passengerById =  userRepository.findById(2L);
+        Passenger passenger = passengerById.get();
+        Ticket ticket = new Ticket();
+        ticket.setTrip(trip);
+        ticket.setPassenger(passenger);
+        ticketRepository.save(ticket);
+
+
+    }
+
+
+    @Test
     public void removeTicket() {
         Optional<Ticket> byId = ticketRepository.findById(5L);
         Ticket ticket = byId.get();
         ticketRepository.delete(ticket);
+    }
+
+    @Test
+    public void findTicketsForPassenger() {
+        Optional<User> byId = userRepository.findById(2L);
+        Passenger user = byId.get();
+        List<Ticket> byPassenger = ticketRepository.findByPassenger(user);
+        System.out.println("=============");
+        byPassenger.forEach(System.out::println);
+        Optional<Passenger> pById = passengerRepository.findById(3L);
+        Passenger passenger = pById.get();
+        System.out.println("=============");
+        List<Ticket> byPassenger1 = ticketRepository.findByPassenger(passenger);
+        byPassenger1.forEach(System.out::println);
     }
 
 }
