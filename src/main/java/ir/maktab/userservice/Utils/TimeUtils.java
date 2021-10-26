@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 
 public class TimeUtils {
     public static Date dateOf(String date) throws ParseException {
-        java.util.Date utilDate = new SimpleDateFormat("dd MM yyyy").parse(date);
+        java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
         return new Date(utilDate.getTime());
 
         ///     @Test

@@ -5,13 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 
 </head>
 <body class="">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -25,44 +26,70 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link " href="/search">search</a>
+                <a class="nav-link " href="/ticket">search</a>
             </li>
         </ul>
 
     </div>
 </nav>
-<div class="row d-flex justify-content-center">
-    <div class="m-5 col-4 " >
-        <form th:action="@{/users/login}" method="post">
-            <div class="form-group">
-                <label for="user-name">user name</label>
-                <input type="text" name="user-name" class="form-control" id="user-name" aria-describedby="user-name" placeholder="Enter user name">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+<div class="row  ">
+    <form class="p-4  col-12 text-center" th:action="@{/ticket/search}" method="post">
+        <label for="moving-date">moving date : </label>
+        <input type="date" id="moving-date"  placeholder="dd-mm-yyyy" name="moving-date">
+        <label for="origin">from : </label>
+        <input type="text" id="origin" name="origin" placeholder="city name">
+        <label for="destination">to : </label>
+        <input type="text" id="destination" name="destination" placeholder="city name">
+        <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+    </form>
 </div>
+
+<div class="container-fluid ">
+    <table class="table table-bordered text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th  class="text-center" >moving date :
+                <span th:if="${listTrip.size()!=0}" >[[${listTrip.get(0).movingDate}]]</span>
+
+            </th>
+<!--            origin-->
+<!--            destination-->
+<!--            movingDate-->
+            <th colspan="2" class="text-center">route :
+                <span th:if="${listTrip.size()!=0}" >[[${listTrip.get(0).origin}]]</span>
+                -
+                <span th:if="${listTrip.size()!=0}" >[[${listTrip.get(0).destination}]]</span>
+            </th>
+
+        </tr>
+        <tr>
+            <th>trip id</th>
+            <th>moving time</th>
+
+            <th></th>
+        </tr>
+        <tbody>
+        <th:block th:each="trip : ${listTrip}">
+            <tr>
+                <td>[[${trip.id}]]</td>
+                <td>[[${trip.movingTime}]]</td>
+
+                <td>
+                    <a class="h4 mr-3" th:href="@{'/users/edit/' +${trip.id}}">buy</a>
+<!--                    <a class="h4" th:href="@{'/users/delete/' + ${trip.id}}">Delete</a>-->
+                </td>
+            </tr>
+        </th:block>
+
+        </tbody>
+
+
+    </table>
+</div>
+
 </body>
 </html>
 
 
 
-<!--<table class="table table-bordered">-->
-<!--    <thead class="thead-dark">-->
-<!--    <tr>-->
-<!--        <th>ID</th>-->
-<!--        <th>E-mail</th>-->
-<!--        <th>First Name</th>-->
-<!--        <th>Last Name</th>-->
-<!--        <th></th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    I-->
-<!--    </tbody>-->
-<!--</table>-->
+
