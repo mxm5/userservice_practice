@@ -21,6 +21,10 @@ public interface TripRepository extends CrudRepository<Trip, Long> {
             String origin, String destination, Date movingDate
     );
 
+    List<Trip> findByOriginAndDestinationAndMovingDateAndAvailableOrderByMovingTimeAsc(
+            String origin, String destination, Date movingDate,Boolean available
+    );
+
 //    id
 //    origin
 //    destination

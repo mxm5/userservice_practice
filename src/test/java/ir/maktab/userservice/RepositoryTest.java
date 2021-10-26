@@ -53,7 +53,7 @@ public class RepositoryTest {
 
     @Test
     public void timeUtilTest() throws ParseException {
-        Date date = dateOf("11 11 2020");
+        Date date = dateOf("2020-11-11");
         System.out.println(date.getYear());
 
     }
@@ -70,8 +70,9 @@ public class RepositoryTest {
         Trip trip = new Trip();
         trip.setDestination("tehran");
         trip.setOrigin("mashad");
-        trip.setMovingDate(dateOf("10 11 2020"));
-        trip.setMovingTime(timeOf("10:10:00"));
+//        "yyyy-MM-dd"
+        trip.setMovingDate(dateOf("2020-11-11"));
+        trip.setMovingTime(timeOf("10:06:00"));
         trip.setTotalSeats(30);
         Trip saved = tripRepository.save(trip);
         assertNotNull(saved);
@@ -81,10 +82,10 @@ public class RepositoryTest {
     @Test
     public void superFind() throws ParseException {
         Iterable<Trip> list = tripRepository.findByOriginIsAndDestinationIsAndMovingDateIs(
-                "mashad", "tehran", dateOf("10 11 2020")
+                "mashad", "tehran", dateOf("2020-11-11")
         );
         List<Trip> byOriginAndDestinationAndMovingDate = tripRepository.findByOriginAndDestinationAndMovingDate(
-                "mashad", "tehran", dateOf("10 11 2020")
+                "mashad", "tehran", dateOf("2020-11-11")
         );
         byOriginAndDestinationAndMovingDate.forEach(System.out::println);
         System.out.println("========================");
@@ -92,7 +93,7 @@ public class RepositoryTest {
             System.out.println(trip);
         }
         List<Trip> byMovingTime = tripRepository.findByOriginAndDestinationAndMovingDateOrderByMovingTimeAsc(
-                "mashad", "tehran", dateOf("11 11 2020")
+                "mashad", "tehran", dateOf("2020-11-11")
         );
         System.out.println("11111111111111");
         byMovingTime.forEach(System.out::println);

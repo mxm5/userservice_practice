@@ -26,6 +26,8 @@ public class Trip {
 //    movingDate
 //    movingTime
 //    tickets
+//    available
+
 
 
     @Id
@@ -49,15 +51,18 @@ public class Trip {
     private Time movingTime;
 
 
-
     @OneToMany(mappedBy = "trip", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
+
+    @Column(name = "available", nullable = false)
+    private Boolean available = true;
 
     public void preservedOne(Ticket ticket) {
         if (totalSeats > tickets.size()) {
             this.tickets.add(ticket);
-        }else
+        } else {
             throw new TicketsSoldOut(" all tickets sold out ");
+        }
     }
 
     @Override
@@ -70,6 +75,11 @@ public class Trip {
                 ", movingDate=" + movingDate +
                 ", movingTime=" + movingTime +
                 '}';
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if(totalSeats==tickets.size()) available =false;
     }
 }
 
