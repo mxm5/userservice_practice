@@ -7,4 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/ticket")
 public class TicketController {
 
+    public String searchTickets() {
+        return null;
+
+    }
+
 }

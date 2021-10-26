@@ -33,4 +33,13 @@ public class User extends Passenger{
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                '}';
+    }
 }

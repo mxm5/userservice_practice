@@ -31,12 +31,26 @@
 
     </div>
 </nav>
-<div class="m-5 container-fluid text-center">
-    <h1 class="display-3 font-weight-bold">welcome to bus ticket booking</h1>
-    <a class="h2" th:href="@{/users/}">login to system</a>
+<div class="row d-flex justify-content-center">
+<div class="m-5 col-4 " >
+    <form th:action="@{/users/login}" method="post">
+        <div class="form-group">
+            <label for="user-name">user name</label>
+            <input type="text" name="user-name" class="form-control" id="user-name" aria-describedby="user-name" placeholder="Enter user name">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
-<div class="m-5 container-fluid text-center">
-    <img src="https://s4.uupload.ir/files/3124381_sbch.png" alt="Italian Trulli">
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="m-5 col-4 " >
+        <div class="m-5 alert-danger alert" th:if="${error}">[[${error}]]</div>
+    </div>
 </div>
 </body>
 </html>

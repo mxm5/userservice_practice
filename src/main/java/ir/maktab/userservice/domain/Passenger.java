@@ -27,20 +27,20 @@ public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    protected Long id;
 
     @Column(name = "first_name", nullable = false)
-    private String firstName;
+    protected String firstName;
 
     @Column(name = "last_name", nullable = false)
-    private String lastName;
+    protected String lastName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
-    private Gender gender;
+    protected Gender gender;
 
     @OneToMany(mappedBy = "passenger", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    private List<Ticket> tickets = new ArrayList<>();
+    protected List<Ticket> tickets = new ArrayList<>();
 
     public Passenger(String firstName, String lastName, Gender gender) {
         this.firstName = firstName;
@@ -56,4 +56,13 @@ public class Passenger {
         this.tickets.add(ticket);
     }
 
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                '}';
+    }
 }
