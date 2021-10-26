@@ -58,6 +58,17 @@ public class Trip {
             throw new TicketsSoldOut("\n\n all tickets sold out \n\n");
     }
 
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "id=" + id +
+                ", origin='" + origin + '\'' +
+                ", destination='" + destination + '\'' +
+                ", totalSeats=" + totalSeats +
+                ", movingDate=" + movingDate +
+                ", movingTime=" + movingTime +
+                '}';
+    }
 }
 
 //

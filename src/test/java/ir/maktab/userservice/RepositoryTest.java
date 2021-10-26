@@ -17,6 +17,7 @@ import org.springframework.test.annotation.Rollback;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
 
 import static ir.maktab.userservice.Utils.TimeUtils.*;
@@ -69,7 +70,7 @@ public class RepositoryTest {
         Trip trip = new Trip();
         trip.setDestination("tehran");
         trip.setOrigin("mashad");
-        trip.setMovingDate(dateOf("11 11 2020"));
+        trip.setMovingDate(dateOf("10 11 2020"));
         trip.setMovingTime(timeOf("10:10:00"));
         trip.setTotalSeats(30);
         Trip saved = tripRepository.save(trip);
@@ -77,7 +78,27 @@ public class RepositoryTest {
         assertNotNull(saved.getId());
     }
 
-
+    @Test
+    public void superFind() throws ParseException {
+        Iterable<Trip> list = tripRepository.findByOriginIsAndDestinationIsAndMovingDateIs(
+                "mashad", "tehran", dateOf("10 11 2020")
+        );
+        List<Trip> byOriginAndDestinationAndMovingDate = tripRepository.findByOriginAndDestinationAndMovingDate(
+                "mashad", "tehran", dateOf("10 11 2020")
+        );
+        byOriginAndDestinationAndMovingDate.forEach(System.out::println);
+        System.out.println("========================");
+        for (Trip trip : list) {
+            System.out.println(trip);
+        }
+        List<Trip> byMovingTime = tripRepository.findByOriginAndDestinationAndMovingDateOrderByMovingTimeAsc(
+                "mashad", "tehran", dateOf("11 11 2020")
+        );
+        System.out.println("11111111111111");
+        byMovingTime.forEach(System.out::println);
+        list.forEach(System.out::println);
+        System.out.println("========================");
+    }
 
     @Test
     public void testUserRepo() {
@@ -108,6 +129,13 @@ public class RepositoryTest {
         ticketRepository.save(ticket);
 
 
+    }
+
+    @Test
+    public void removeTicket() {
+        Optional<Ticket> byId = ticketRepository.findById(5L);
+        Ticket ticket = byId.get();
+        ticketRepository.delete(ticket);
     }
 
 }
