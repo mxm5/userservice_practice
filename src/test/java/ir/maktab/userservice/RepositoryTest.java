@@ -77,17 +77,7 @@ public class RepositoryTest {
         assertNotNull(saved.getId());
     }
 
-    @Test
-    public void orderTicket() throws Exception {
-        Optional<Trip> tripById = tripRepository.findById(3L);
-        Trip trip = tripById.get();
-        Optional<Passenger> passengerById = passengerRepository.findById(1L);
-        Passenger passenger = passengerById.get();
-        Ticket ticket = new Ticket(trip, passenger);
-        ticketRepository.save(ticket);
 
-
-    }
 
     @Test
     public void testUserRepo() {
@@ -104,6 +94,22 @@ public class RepositoryTest {
         User alix = userRepository.findByUserName("alix");
         assertNotNull(alix);
     }
+
+
+    @Test
+    public void orderTicket() throws Exception {
+        Optional<Trip> tripById = tripRepository.findById(1L);
+        Trip trip = tripById.get();
+        Optional<Passenger> passengerById = passengerRepository.findById(3L);
+        Passenger passenger = passengerById.get();
+        Ticket ticket = new Ticket();
+        ticket.setTrip(trip);
+        ticket.setPassenger(passenger);
+        ticketRepository.save(ticket);
+
+
+    }
+
 }
 
 //
