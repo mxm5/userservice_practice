@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface TicketServiceApi<Ticket,Long>{
     Ticket buyTicket(Trip trip, Passenger passenger);
+
+    Ticket buyTicketWithInfo(String firstName, String lastName, String gender, String tripId);
+
 }

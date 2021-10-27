@@ -33,14 +33,14 @@
     </div>
 </nav>
 <div class="row  ">
-    <form class="p-4  col-12 text-center" th:action="@{/ticket/search}" method="post">
+    <form class="p-4  col-12 text-center " th:action="@{/ticket/search}" method="post">
         <label for="moving-date">moving date : </label>
         <input type="date" id="moving-date"  placeholder="dd-mm-yyyy" name="moving-date">
         <label for="origin">from : </label>
         <input type="text" id="origin" name="origin" placeholder="city name">
         <label for="destination">to : </label>
         <input type="text" id="destination" name="destination" placeholder="city name">
-        <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+        <button type="submit" class="btn btn-sm mb-2 btn-primary">Search</button>
     </form>
 </div>
 

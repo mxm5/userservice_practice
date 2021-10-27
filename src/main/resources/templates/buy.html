@@ -5,13 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 
 </head>
 <body class="">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -32,28 +33,40 @@
     </div>
 </nav>
 <div class="row d-flex justify-content-center">
-    <div class="m-5 col-4 " >
+    <div th:if="${trip}" class="col-4 mt-4">
+        <!--        Trip{id=6, origin='mashad', destination='tehran', totalSeats=30, movingDate=2020-11-11, movingTime=10:06:00}-->
+        <p> from :
+            [[${trip.origin}]] to : [[${trip.destination}]] <br>
+            on : [[${trip.movingDate}]] at : [[${trip.movingTime}]]
+        </p>
+
+    </div>
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="m-4 col-4 ">
         <form th:action="@{/ticket/buying}" method="post">
             <div class="form-group">
                 <label for="first-name">first name</label>
-                <input type="text" name="first-name" class="form-control" id="first-name" aria-describedby="user-name" placeholder="enter first name">
+                <input type="text" name="first-name" class="form-control" id="first-name" aria-describedby="user-name"
+                       placeholder="enter first name">
             </div>
             <div class="form-group">
                 <label for="last-name">last name</label>
-                <input type="text" name="last-name" class="form-control" id="last-name" aria-describedby="user-name" placeholder="enter last name">
+                <input type="text" name="last-name" class="form-control" id="last-name" aria-describedby="user-name"
+                       placeholder="enter last name">
             </div>
             <p>gender</p>
-             <input type="radio" id="male" name="gender" value="male">
-             <label for="male">male</label><br>
-             <input type="radio" id="female" name="gender" value="female">
-             <label for="female">female</label><br>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <input type="radio" id="male" name="gender" value="male" checked>
+            <label for="male">male</label><br>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">female</label><br>
+            <button type="submit" class="btn btn-primary mt-1">Proceed</button>
+            <input th:if="${trip}" type="hidden" id="trip-id" name="trip-id" th:value="${trip.id}" >
         </form>
     </div>
 </div>
 <div class="row d-flex justify-content-center">
-    <div class=" col-4 " >
+    <div class=" col-4 ">
         <div class=" alert-danger alert" th:if="${error}">[[${error}]]</div>
     </div>
 </div>
