@@ -61,7 +61,14 @@ public class TicketController {
     SessionData sessionData;
 
     @GetMapping("/buy/{id}")
-    public String getBuyTicket(@PathVariable("id") String tripId, Model model) {
+    public String getBuyTicket(@PathVariable("id") String tripId, Model model
+            , RedirectAttributes redirectAttributes
+    ) {
+        if (sessionData.getCurrentUser() == null) {
+            redirectAttributes.addFlashAttribute("error", "for buying tickets you must login");
+            return "redirect:/users";
+        }
+
         try {
             Optional<Trip> trip = tripService.getById(tripId);
             if (trip.isPresent()) {
@@ -90,6 +97,11 @@ public class TicketController {
             Model model,
             RedirectAttributes redirectAttributes
     ) {
+        if (sessionData.getCurrentUser() == null) {
+            redirectAttributes.addFlashAttribute("error", "for buying tickets you must login");
+            return "redirect:/users";
+        }
+
         try {
             Ticket ticket = ticketService.buyTicketWithInfo(
                     firstName,
@@ -109,7 +121,7 @@ public class TicketController {
             redirectAttributes.addFlashAttribute("error", "something went wrong " + e.getMessage());
             redirectAttributes.addFlashAttribute("trip-id", tripId);
         }
-        return "redirect:/ticket/buy/"+tripId;
+        return "redirect:/ticket/buy/" + tripId;
     }
 
 

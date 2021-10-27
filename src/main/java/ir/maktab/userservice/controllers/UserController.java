@@ -2,6 +2,7 @@ package ir.maktab.userservice.controllers;
 
 import ir.maktab.userservice.Utils.SessionData;
 import ir.maktab.userservice.domain.Passenger;
+import ir.maktab.userservice.domain.User;
 import ir.maktab.userservice.services.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,19 +19,20 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
 
-    UserService userService;
-    final
-    SessionData sessionData;
+    final UserService userService;
+    final SessionData sessionData;
 
 
     @Autowired
-    public UserController(SessionData sessionData) {
+    public UserController(SessionData sessionData, UserService userService) {
+        this.userService = userService;
         this.sessionData = sessionData;
     }
 
 
-    @GetMapping({"","/"})
+    @GetMapping({"", "/"})
     public String getLoginPage() {
+        if (sessionData.getCurrentUser() != null) return "redirect:/users/dashboard";
         return "login";
     }
 
@@ -40,17 +42,21 @@ public class UserController {
             @RequestParam("password") String password,
             RedirectAttributes redirectAttributes
     ) {
+        if (sessionData.getCurrentUser() != null) return "redirect:/users/dashboard";
+
+
         try {
             Optional<Passenger> login = userService.login(userName, password);
             if (login.isPresent()) {
                 sessionData.setCurrentUser(login.get());
                 System.out.println(sessionData.getCurrentUser());
-                return "redirect: /users/dashboard";
-            } else{
-                redirectAttributes.addFlashAttribute("error","invalid information");
-                return "redirect:/users";}
+                return "redirect:/users/dashboard";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "invalid information");
+                return "redirect:/users";
+            }
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error","invalid information "+e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "invalid information " + e.getMessage());
             return "redirect:/users";
         }
 
@@ -58,8 +64,14 @@ public class UserController {
     }
 
     @GetMapping("/dashboard")
-    String getUserTicketHistory() {
-        return null;
+    String getUserTicketHistory(
+            RedirectAttributes redirectAttributes
+    ) {
+        // chek login
+        if (sessionData.getCurrentUser() != null)
+            return "dashboard";
+        redirectAttributes.addFlashAttribute("error", "you must login to see dashboard");
+        return "redirect:/users";
     }
 
 
