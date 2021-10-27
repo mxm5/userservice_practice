@@ -23,6 +23,22 @@ import java.util.Optional;
 public class TicketController {
 
 
+    @GetMapping("/delete/{id}")
+    public String deleteTicket(
+            @PathVariable("id") String ticketId,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ) {
+        try {
+            ticketService.removeTicket(ticketId);
+            redirectAttributes.addFlashAttribute("result", "successfully deleted ticket with id " + ticketId);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "could not delete ticket with id " + ticketId);
+        }
+
+        return "redirect:/users/dashboard";
+    }
+
     @GetMapping({"/", ""})
     public String getSearchTickets() {
         return "search";
@@ -125,9 +141,6 @@ public class TicketController {
     }
 
 
-
-
-
     @GetMapping("/show/{id}")
     public String showTicketDetail(@PathVariable("id") String ticketId, Model model
             , RedirectAttributes redirectAttributes
@@ -141,8 +154,8 @@ public class TicketController {
             Optional<Ticket> ticketById = ticketService.findTicketById(ticketId);
             if (ticketById.isPresent()) {
                 Ticket ticket = ticketById.get();
-                    model.addAttribute("ticket", ticket);
-                    return "ticketDetail";
+                model.addAttribute("ticket", ticket);
+                return "ticketDetail";
             }
         } catch (Exception e) {
             model.addAttribute("error", "something went wrong " + e.getMessage());

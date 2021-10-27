@@ -77,4 +77,10 @@ public class TicketService implements TicketServiceApi<Ticket, Long> {
         Optional<Ticket> byId = ticketRepository.findById(id);
         return byId;
     }
+
+    @Override
+    public void removeTicket(String ticketId) {
+        long id = Long.parseLong(ticketId);
+        ticketRepository.deleteById(id);
+    }
 }

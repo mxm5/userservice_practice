@@ -88,6 +88,12 @@
             <td>[[${ticket.trip.id}]]</td>
             <td>trip id</td>
         </tr>
+        <tr class="bg-danger" th:if="${ticket}">
+            <td colspan="2">
+
+                <a class="h4 mr-3 text-light " th:href="@{'/ticket/delete/' +${ticket.id}}">delete ticket</a>
+            </td>
+        </tr>
 
 
         </tbody>
