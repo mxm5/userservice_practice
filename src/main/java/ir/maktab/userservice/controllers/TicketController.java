@@ -125,4 +125,31 @@ public class TicketController {
     }
 
 
+
+
+
+    @GetMapping("/show/{id}")
+    public String showTicketDetail(@PathVariable("id") String ticketId, Model model
+            , RedirectAttributes redirectAttributes
+    ) {
+        if (sessionData.getCurrentUser() == null) {
+            redirectAttributes.addFlashAttribute("error", "for buying tickets you must login");
+            return "redirect:/users";
+        }
+
+        try {
+            Optional<Ticket> ticketById = ticketService.findTicketById(ticketId);
+            if (ticketById.isPresent()) {
+                Ticket ticket = ticketById.get();
+                    model.addAttribute("ticket", ticket);
+                    return "ticketDetail";
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "something went wrong " + e.getMessage());
+        }
+        return "redirect:/users";
+
+    }
+
+
 }

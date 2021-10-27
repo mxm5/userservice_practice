@@ -52,7 +52,7 @@ public class TicketService implements TicketServiceApi<Ticket, Long> {
         else throw new GenderNotProvided(" gender not provided");
         // check if passenger exists
         Passenger p = passengerRepository.findByFirstNameAndLastNameAndGender(firstName, lastName, passengerGender);
-        if (p == null) p = userRepository.findByFirstNameAndLastNameAndGender(firstName,lastName,passengerGender);
+        if (p == null) p = userRepository.findByFirstNameAndLastNameAndGender(firstName, lastName, passengerGender);
         if (p == null) p = new Passenger(firstName, lastName, passengerGender);
         Long id = Long.parseLong(tripId);
         Optional<Trip> byId = tripRepository.findById(id);
@@ -61,13 +61,20 @@ public class TicketService implements TicketServiceApi<Ticket, Long> {
         Ticket ticket = new Ticket();
         Long buyerId = sessionData.getCurrentUser().getId();
         Optional<User> buyerById = userRepository.findById(buyerId);
-        User buyer =null;
-        if(buyerById.isPresent()) buyer =buyerById.get();
+        User buyer = null;
+        if (buyerById.isPresent()) buyer = buyerById.get();
         else throw new NoUserFound("no user logged in ");
         ticket.setBuyer(buyer);
         ticket.setTrip(trip);
         ticket.setPassenger(p);
         return ticketRepository.save(ticket);
 
+    }
+
+    @Override
+    public Optional<Ticket> findTicketById(String ticketId) {
+        long id = Long.parseLong(ticketId);
+        Optional<Ticket> byId = ticketRepository.findById(id);
+        return byId;
     }
 }

@@ -31,7 +31,7 @@
 
     </div>
 </nav>
-<div class="m-5  text-center alert alert-success">
+<div th:if="${result}" class="m-5  text-center alert alert-success">
     thank you <span th:if="${result}">[[${result}]]</span>
 </div>
 <div class="container-fluid ">

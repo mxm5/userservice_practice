@@ -10,4 +10,5 @@ public interface TicketServiceApi<Ticket,Long>{
 
     Ticket buyTicketWithInfo(String firstName, String lastName, String gender, String tripId);
 
+    Optional<Ticket> findTicketById(String ticketId);
 }

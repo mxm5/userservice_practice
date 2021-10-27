@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+
+</head>
+<body class="">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="/users">login <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/dashboard">dashboard</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link " href="/ticket">search</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+<div th:if="${result}" class="m-5  text-center alert alert-success">
+    thank you <span th:if="${result}">[[${result}]]</span>
+</div>
+<div class="container-fluid ">
+    <table class="table table-bordered text-center">
+        <thead class="thead-dark">
+        <tr>
+
+            <th colspan="2" class="text-center">
+                bought ticket
+            </th>
+
+        </tr>
+        <tbody>
+        <tr th:if="${error}">
+            <td colspan="3">
+                <div class="alert alert-danger"> [[${error}]]</div>
+            </td>
+        </tr>
+
+        <tr th:if="${ticket}">
+            <td>[[${ticket.id}]]</td>
+            <td>ticket id</td>
+        </tr>
+        <tr th:if="${ticket}">
+            <td>[[${ticket.passenger.firstName}]]</td>
+            <td>passenger first name</td>
+        </tr>
+        <tr th:if="${ticket}">
+            <td>[[${ticket.passenger.lastName}]]</td>
+            <td>passenger last name</td>
+        </tr>
+        <tr th:if="${ticket}">
+            <td>[[${ticket.passenger.gender}]]</td>
+            <td>passenger gender</td>
+        </tr>
+        <tr th:if="${ticket}">
+            <td>[[${ticket.trip.origin}]]</td>
+            <td>origin</td>
+        </tr>
+        <tr th:if="${ticket}">
+            <td>[[${ticket.trip.destination}]]</td>
+            <td>destination</td>
+        </tr>
+        <tr th:if="${ticket}">
+            <td>[[${ticket.trip.movingDate}]]</td>
+            <td>moving date</td>
+        </tr>
+        <tr th:if="${ticket}">
+            <td>[[${ticket.trip.movingTime}]]</td>
+            <td>moving time</td>
+        </tr>
+        <tr th:if="${ticket}">
+            <td>[[${ticket.trip.id}]]</td>
+            <td>trip id</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <div style="height: 5rem"></div>
+
+</div>
+</body>
+</html>
