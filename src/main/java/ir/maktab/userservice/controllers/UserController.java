@@ -2,7 +2,9 @@ package ir.maktab.userservice.controllers;
 
 import ir.maktab.userservice.Utils.SessionData;
 import ir.maktab.userservice.domain.Passenger;
+import ir.maktab.userservice.domain.Ticket;
 import ir.maktab.userservice.domain.User;
+import ir.maktab.userservice.repositories.UserRepository;
 import ir.maktab.userservice.services.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,12 +24,14 @@ public class UserController {
 
     final UserService userService;
     final SessionData sessionData;
-
+    final UserRepository userRepository;
 
     @Autowired
-    public UserController(SessionData sessionData, UserService userService) {
+    public UserController(SessionData sessionData, UserService userService,UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
         this.sessionData = sessionData;
+
     }
 
 
@@ -46,7 +51,7 @@ public class UserController {
 
 
         try {
-            Optional<Passenger> login = userService.login(userName, password);
+            Optional<User> login = userService.login(userName, password);
             if (login.isPresent()) {
                 sessionData.setCurrentUser(login.get());
                 System.out.println(sessionData.getCurrentUser());
@@ -65,13 +70,20 @@ public class UserController {
 
     @GetMapping("/dashboard")
     String getUserTicketHistory(
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Model model
     ) {
         // chek login
-        if (sessionData.getCurrentUser() != null)
-            return "dashboard";
-        redirectAttributes.addFlashAttribute("error", "you must login to see dashboard");
-        return "redirect:/users";
+        if (sessionData.getCurrentUser() == null) {
+            redirectAttributes.addFlashAttribute("error", "you must login to see dashboard");
+            return "redirect:/users";
+        }
+        Long id = sessionData.getCurrentUser().getId();
+        Optional<User> byId = userRepository.findById(id);
+        User user = byId.get();
+        List<Ticket> boughtTickets = user.getBoughtTickets();
+        model.addAttribute("bought", boughtTickets);
+        return "dashboard";
     }
 
 

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,9 @@ public class User extends Passenger{
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "buyer", orphanRemoval = true)
+    private List<Ticket> boughtTickets;
 
     @Override
     public String toString() {

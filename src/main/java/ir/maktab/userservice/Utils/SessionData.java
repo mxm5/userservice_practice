@@ -1,6 +1,7 @@
 package ir.maktab.userservice.Utils;
 
 import ir.maktab.userservice.domain.Passenger;
+import ir.maktab.userservice.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,6 @@ import org.springframework.web.context.WebApplicationContext;
 @NoArgsConstructor
 @Scope(proxyMode= ScopedProxyMode.TARGET_CLASS, value= WebApplicationContext.SCOPE_SESSION)
 public class SessionData {
-    private Passenger currentUser;
+    private User currentUser;
 
 }

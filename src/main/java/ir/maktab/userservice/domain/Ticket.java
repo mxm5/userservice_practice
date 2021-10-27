@@ -23,7 +23,7 @@ public class Ticket {
 //    ticketId
 //    seatNumber
 //    buyingTime
-
+//    buyer
 
     public void setTrip(Trip trip) {
         trip.preservedOne(this);
@@ -36,6 +36,10 @@ public class Ticket {
         this.passenger = passenger;
     }
 
+    public void setBuyer(User user) {
+        buyer =user;
+    }
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "trip_id", nullable = false )
     private Trip trip;
@@ -43,6 +47,7 @@ public class Ticket {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "passenger_id", nullable = false )
     private Passenger passenger;
+
 
 
     @Column(name = "seat_number", nullable = false)
@@ -55,6 +60,10 @@ public class Ticket {
     @Column(name = "id", nullable = false)
     @GeneratedValue
     private Long id;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
+    @JoinColumn(name = "buyer_id", nullable = false)
+    private User buyer;
 
     @PreRemove
     public void preRemove() {

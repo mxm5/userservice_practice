@@ -136,7 +136,7 @@ public class RepositoryTest {
     public void orderTicketUser() throws Exception {
         Optional<Trip> tripById = tripRepository.findById(1L);
         Trip trip = tripById.get();
-        Optional<User> passengerById =  userRepository.findById(2L);
+        Optional<User> passengerById = userRepository.findById(2L);
         Passenger passenger = passengerById.get();
         Ticket ticket = new Ticket();
         ticket.setTrip(trip);
@@ -168,6 +168,15 @@ public class RepositoryTest {
         byPassenger1.forEach(System.out::println);
     }
 
+    @Test
+    public void
+    getAllBought() {
+        Optional<User> byId = userRepository.findById(2L);
+        User user = byId.get();
+        List<Ticket> boughtTickets = user.getBoughtTickets();
+        boughtTickets.forEach(System.out::println);
+
+    }
 }
 
 //
