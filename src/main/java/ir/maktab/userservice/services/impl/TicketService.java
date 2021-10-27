@@ -7,6 +7,7 @@ import ir.maktab.userservice.exceptions.EmptyFieldException;
 import ir.maktab.userservice.exceptions.FailedBuyingTicket;
 import ir.maktab.userservice.exceptions.GenderNotProvided;
 import ir.maktab.userservice.exceptions.TripNotFound;
+import ir.maktab.userservice.repositories.PassengerRepository;
 import ir.maktab.userservice.repositories.TicketRepository;
 import ir.maktab.userservice.repositories.TripRepository;
 import ir.maktab.userservice.services.TicketServiceApi;
@@ -22,6 +23,8 @@ public class TicketService implements TicketServiceApi<Ticket, Long> {
     TicketRepository ticketRepository;
     @Autowired
     TripRepository tripRepository;
+    @Autowired
+    PassengerRepository passengerRepository;
 
     @Override
     public Ticket buyTicket(Trip trip, Passenger passenger) {
@@ -43,14 +46,16 @@ public class TicketService implements TicketServiceApi<Ticket, Long> {
         if (gender.equalsIgnoreCase("male")) passengerGender = Passenger.Gender.MALE;
         else if(gender.equalsIgnoreCase("female")) passengerGender = Passenger.Gender.FEMALE;
         else throw new GenderNotProvided(" gender not provided");
-        Passenger passenger = new Passenger(firstName, lastName, passengerGender);
+        // check if passenger exists
+        Passenger p = passengerRepository.findByFirstNameAndLastNameAndGender(firstName, lastName, passengerGender);
+        if (p==null) p = new Passenger(firstName, lastName, passengerGender);
         Long id = Long.parseLong(tripId);
         Optional<Trip> byId = tripRepository.findById(id);
         if(byId.isEmpty()) throw new TripNotFound("tripNotFound");
         Trip trip = byId.get();
         Ticket ticket = new Ticket();
         ticket.setTrip(trip);
-        ticket.setPassenger(passenger);
+        ticket.setPassenger(p);
         return ticketRepository.save(ticket);
 
     }
